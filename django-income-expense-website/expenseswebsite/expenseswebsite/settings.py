@@ -15,6 +15,8 @@ import os
 import django_heroku
 import os, json
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -156,3 +158,8 @@ STATIC_ROOT =os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 django_heroku.settings(locals())  #jango-heroku setting for using gunicorn 
+
+MESSAGE_TAGS = {
+    messages.ERROR : 'danger'
+
+}

@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 # user modle library (login ect .. )
 from validate_email import validate_email 
-
+from django.contrib import messages
 class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body) 
@@ -40,3 +40,12 @@ class EmailValidationView(View) :
 class RegisterationView(View):
     def get(self, request):
         return render(request, "authentication/register.html")
+    
+    def post(self, request):
+
+        messages.success(request, "Success whatsapp")
+        messages.warning(request, "warning")
+        messages.info(request, "info")
+        messages.error(request, "error")
+
+        return render(request,"authentication/register.html")
