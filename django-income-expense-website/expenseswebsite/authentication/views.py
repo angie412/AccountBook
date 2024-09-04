@@ -42,10 +42,31 @@ class RegisterationView(View):
         return render(request, "authentication/register.html")
     
     def post(self, request):
+        #GET USER DATA
+        #VALIDATE
+        # create a user account
 
-        messages.success(request, "Success whatsapp")
-        messages.warning(request, "warning")
-        messages.info(request, "info")
-        messages.error(request, "error")
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+
+        context = {
+            'fieldValues' :request.POST
+        }
+
+        if not User.objects.filter(username = username).exists():
+            if not User.objects.filter(email = email).exists():
+
+                if len(password) < 6 :
+                    messages.error(request, "password too short")
+                    return render(request,"authentication/register.html",context)
+
+                user = User.objects.create_user(username = username, email = email)
+                user.set_password(password)
+                user.save()
+                # https://docs.djangoproject.com/en/5.1/ref/contrib/auth/
+                messages.success(request,'Account successfully created')
+                return render(request,"authentication/register.html")
+                
 
         return render(request,"authentication/register.html")
